@@ -15,6 +15,9 @@ import org.testng.annotations.Test;
 
 import java.util.Optional;
 
+/**
+ * API Contract test class will validate the API Response according to the given Acceptance Criteria
+ */
 @Test
 public class APIContractTest {
 
@@ -52,7 +55,7 @@ public class APIContractTest {
     @Test(dependsOnMethods = {"apiNamePropertyValidation"}, description = "CanRelist property validation")
     public void apiCanRelistPropertyValidation() {
         Assert.assertEquals(response.getBody().isCanRelist(), EXPECTED_VALUE_OF_PROPERTY_CAN_RELIST,
-                "Expected value: " + EXPECTED_VALUE_OF_PROPERTY_NAME + " of property CanRelist is different from actual: " + response.getBody().isCanRelist());
+                "Expected value: " + EXPECTED_VALUE_OF_PROPERTY_CAN_RELIST + " of property CanRelist is different from actual: " + response.getBody().isCanRelist());
     }
 
     @Test(dependsOnMethods = {"apiCanRelistPropertyValidation"}, description = "Promotions property validation")
@@ -60,8 +63,8 @@ public class APIContractTest {
         Optional<Promotion> promotionOptional = response.getBody().getPromotions().stream().filter(it ->
                 it.getName().equals(EXPECTED_VALUE_OF_PROPERTY_PROMOTIONS_NAME) && it.getDescription().contains(EXPECTED_VALUE_OF_PROPERTY_PROMOTIONS_DESCRIPTION)
         ).findAny();
-
-        Assert.assertTrue(promotionOptional.isPresent(), "Matching promotion doesn't exist.");
+        Assert.assertTrue(promotionOptional.isPresent(), "A promotion element with Name: " + EXPECTED_VALUE_OF_PROPERTY_PROMOTIONS_NAME +
+                " and with Description contains: "+ EXPECTED_VALUE_OF_PROPERTY_PROMOTIONS_DESCRIPTION + " doesn't exist.");
     }
 
     @AfterTest
